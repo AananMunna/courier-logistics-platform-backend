@@ -1,0 +1,64 @@
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  RIDER
+  CUSTOMER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum AuthProvider {
+  GOOGLE
+  CREDENTIAL
+}
+
+enum RiderVerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum VehicleType {
+  BICYCLE
+  MOTORCYCLE
+  VAN
+  TRUCK
+}
+
+enum ParcelType {
+  DOCUMENT
+  PARCEL
+  FRAGILE
+  ELECTRONICS
+  FOOD
+  OTHER
+}
+
+enum ShipmentStatus {
+  PENDING
+  ASSIGNED
+  PICKED_UP
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  FAILED
+  RETURNED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  BKASH
+  COD
+}
