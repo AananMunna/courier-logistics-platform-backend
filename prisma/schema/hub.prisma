@@ -1,0 +1,23 @@
+model Hub {
+  id String @id @default(uuid())
+
+  name          String
+  zone          String
+  address       String
+  contactNumber String?
+
+  isActive  Boolean   @default(true)
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  originShipments      Shipment[] @relation("OriginHub")
+  destinationShipments Shipment[] @relation("DestinationHub")
+
+  @@unique([name, zone], name: "unique_hub_name_zone")
+  @@index([zone], name: "idx_hub_zone")
+  @@index([isActive], name: "idx_hub_isActive")
+  @@map("hubs")
+}
