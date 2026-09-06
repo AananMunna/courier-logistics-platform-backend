@@ -1,0 +1,59 @@
+model Shipment {
+  id           String         @id @default(uuid())
+  trackingCode String         @unique
+  status       ShipmentStatus @default(PENDING)
+
+  parcelType        ParcelType @default(PARCEL)
+  parcelDescription String?
+  weightKg           Decimal   @db.Decimal(6, 2)
+
+  pickupAddress      String
+  pickupContactName  String
+  pickupContactPhone String
+
+  deliveryAddress      String
+  deliveryContactName  String
+  deliveryContactPhone String
+
+  distanceKm  Decimal? @db.Decimal(6, 2)
+  deliveryFee Decimal  @db.Decimal(10, 2)
+
+  isCod     Boolean @default(false)
+  codAmount Decimal @default(0) @db.Decimal(10, 2)
+
+  scheduledPickupAt DateTime?
+  pickedUpAt        DateTime?
+  outForDeliveryAt  DateTime?
+  deliveredAt       DateTime?
+
+  failureReason String?
+  cancelReason  String?
+
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  riderId String?
+  rider   Rider?  @relation(fields: [riderId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  originHubId String
+  originHub   Hub    @relation("OriginHub", fields: [originHubId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  destinationHubId String
+  destinationHub   Hub    @relation("DestinationHub", fields: [destinationHubId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  payment        Payment?
+  trackingEvents TrackingEvent[]
+
+  @@index([status], name: "idx_shipment_status")
+  @@index([customerId], name: "idx_shipment_customerId")
+  @@index([riderId], name: "idx_shipment_riderId")
+  @@index([createdAt], name: "idx_shipment_createdAt")
+  @@index([isDeleted], name: "idx_shipment_isDeleted")
+  @@map("shipments")
+}
