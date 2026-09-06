@@ -1,0 +1,17 @@
+model TrackingEvent {
+  id     String         @id @default(uuid())
+  status ShipmentStatus
+  note   String?
+
+  updatedByUserId String?
+  updatedByName   String?
+  updatedByRole   Role?
+
+  createdAt DateTime @default(now())
+
+  shipmentId String
+  shipment   Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([shipmentId, createdAt], name: "idx_trackingEvent_shipmentId_createdAt")
+  @@map("tracking_events")
+}
